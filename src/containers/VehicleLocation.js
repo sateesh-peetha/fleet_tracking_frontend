@@ -5,6 +5,12 @@ import LocationComponent from '../components/Location'
 import api from '../config';
 import axios from 'axios';
 
+const previousMonth = () => {
+  let d = new Date();
+  d.setMonth(d.getMonth()-1);
+  return d;
+}
+
 class LocationContainer extends React.Component {
   constructor(props) {
     super(props);
@@ -15,14 +21,15 @@ class LocationContainer extends React.Component {
       totalPages: 0,
       totalItems: 0,
       loading: true,
-      fromDate: new Date('2014-08-18T21:11:54'),
-      toDate: new Date('2014-08-18T21:11:54'),
+      fromDate: previousMonth(),
+      toDate: new Date(),
     }
   }
 
   componentDidMount() {
     this.getVehicles();
   }
+
 
   getVehicles(page, pageSize, fromDate, toDate) {
     axios.get(api.location + '/' + this.props.match.params.id
