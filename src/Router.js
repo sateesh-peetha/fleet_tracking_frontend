@@ -1,13 +1,13 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
+import Vehicles from './containers/Vehicle';
+import VehicleLocation from './containers/VehicleLocation';
 
 const Router = () => (
     <>
-        <Header />
         <Switch>
-            <Route exact path="/" component={vehiclesContainer} />
-            {/* {ProgramRouter} */}
-            <Route path="/:id" component={locationContainer} />
+            <Route exact path="/" component={Vehicles} />
+            <Route path="/:id" component={VehicleLocation} />
         </Switch>
     </>
 );
