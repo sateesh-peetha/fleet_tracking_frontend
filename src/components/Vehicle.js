@@ -22,7 +22,7 @@ export default function VehiclesComponent(props) {
             field: 'id',
             headerName: 'Vehicle ID',
             sortable: false,
-            flex: 1,
+            flex: 0.8,
             align: 'left',
         },
         {

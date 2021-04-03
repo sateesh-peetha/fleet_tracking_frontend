@@ -15,6 +15,8 @@ class LocationContainer extends React.Component {
       totalPages: 0,
       totalItems: 0,
       loading: true,
+      fromDate: new Date('2014-08-18T21:11:54'),
+      toDate: new Date('2014-08-18T21:11:54'),
     }
   }
 
@@ -22,11 +24,17 @@ class LocationContainer extends React.Component {
     this.getVehicles();
   }
 
-  getVehicles(page, pageSize) {
+  getVehicles(page, pageSize, fromDate, toDate) {
     axios.get(api.location + '/' + this.props.match.params.id
-      , { params: { size: pageSize || this.state.size, page: page || this.state.page } })
+      , {
+        params: {
+          size: pageSize || this.state.size
+          , page: page || this.state.page
+          , fromDate: fromDate || this.state.fromDate
+          , toDate: toDate || this.state.toDate
+        }
+      })
       .then(response => {
-        console.log(response.data.vehicles);
         this.setState({
           Vehicle_locations: response.data.Vehicle_locations
           , totalPages: response.data.totalPages
@@ -45,13 +53,22 @@ class LocationContainer extends React.Component {
 
   handlePageChange = (params) => {
     this.setState({ page: params.page, loading: true });
-    console.log(params, params.curentPage, this.state.page, this.state.curentPage);
     this.getVehicles(params.page);
   }
 
   handlePageSizeChange = (params) => {
     this.setState({ size: params.pageSize, loading: true });
     this.getVehicles(0, params.pageSize);
+  }
+
+  handleFromDateChange = (date) => {
+    this.setState({ fromDate: date, loading: true });
+    this.getVehicles(this.state.page, this.state.size, date, this.state.toDate);
+  }
+
+  handleToDateChange = (date) => {
+    this.setState({ toDate: date, loading: true });
+    this.getVehicles(this.state.page, this.state.size, this.state.fromDate, date);
   }
 
   render() {
@@ -67,6 +84,10 @@ class LocationContainer extends React.Component {
           page={this.state.page}
           totalItems={this.state.totalItems}
           Vehicle_locations={this.state.Vehicle_locations}
+          handleFromDateChange={this.handleFromDateChange}
+          handleToDateChange={this.handleToDateChange}
+          fromDate={this.state.fromDate}
+          toDate={this.state.toDate}
         ></LocationComponent>
       </div>
     );
