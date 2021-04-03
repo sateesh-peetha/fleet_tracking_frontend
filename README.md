@@ -1,7 +1,5 @@
 # Fleet Tracking Frontend
 
-## Available Scripts
-
 In the project directory, you can run: Run the below command once the fleet tracking api is started.
 
 ### `npm start`
